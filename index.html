@@ -14,6 +14,200 @@
       html {
         scroll-behavior: smooth;
       }
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+  }
+
+  body, html {
+    height: 100%;
+    background-color: black;
+    scroll-behavior: smooth;
+    overflow: hidden;
+
+  }
+  body {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Glass UI */
+  .ui-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px;
+    width: 90%;
+    max-width: 600px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.2);
+    text-align: center;
+    color: #f8c79e;
+    box-shadow: 0 0 20px rgba(0,255,255,0.2);
+    line-height: 2 ;
+
+  }
+  .glass-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+  
+  h1 {
+    font-size: 3em;
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffffaa;
+  }
+  
+  .subtitle {
+    margin-top: 5px;
+    font-size: 1.2em;
+    color: #ffffffcc;
+  }
+  
+  .cam-bubble {
+    margin: 20px auto;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #00ffff55;
+    box-shadow: 0 0 15px #00ffff88;
+  }
+  #circleVideo {
+    transition: opacity 0.5s ease;
+    object-fit: cover;
+
+  }
+  
+  #video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .btn-container {
+    margin-top: 20px;
+  }
+  
+  .btn-glow {
+    background-color: transparent;
+    border: 2px solid #00ffff;
+    padding: 12px 24px;
+    margin: 5px;
+    border-radius: 30px;
+    color: #00ffff;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-glow:hover {
+    background-color: #00ffff33;
+    box-shadow: 0 0 10px #00ffffcc;
+  }
+  
+  .emotion-output:hover {
+    transform: scale(1.05);
+    color: #ffdd57;
+    text-shadow: 0 0 15px #ffdd57aa;
+    transition: 0.3s ease;
+  }
+  
+  
+  
+  .player-bar {
+    margin-top: 20px;
+    background: rgba(0,0,0,0.3);
+  }
+  
+  audio {
+    background-color: rgba(255, 255, 255, 0.1); /* light transparent bg */
+    backdrop-filter: blur(5px); 
+    border-radius: 10px;
+    padding: 5px;
+    width: 520px;
+    transition: background-color 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  audio:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+    
+  audio::-webkit-media-controls-panel {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(5px);
+  }
+  
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+/* Splash screen styles */
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#splash-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Fade-out animation */
+.fade-out {
+    animation: fadeOut 2s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}@keyframes float {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100px); opacity: 0; }
+  }
+  .music-note {
+    position: absolute;
+    color: #00ffff;
+    animation: float 3s ease-in infinite;
+    font-size: 24px;
+  }
+.footer {
+    background-color:  rgba(255, 255, 255, 0.1);
+    color: #DFE4E7; 
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }  
+  
+
       .intro-section {
         position: relative;
         height: 100vh;
@@ -240,6 +434,134 @@
       main.scrollIntoView({ behavior: "smooth" });
     }, 1000); // matches the 1s fade
   });
+  document.addEventListener("DOMContentLoaded", () => {
+  const video        = document.getElementById("video");
+  const circleVideo  = document.getElementById("circle-video");
+  const circleSource = document.getElementById("circle-source");
+  const canvas       = document.getElementById("canvas");
+  const startBtn     = document.getElementById("startWebcam");
+  const captureBtn   = document.getElementById("captureButton");
+  const disp         = document.getElementById("emotion-display");
+  const musicPlayer  = document.getElementById("music-player");
+  const musicSource  = document.getElementById("music-source");
+  const splashScreen = document.getElementById("splash-screen");
+  const mainContent  = document.getElementById("main-content");
+
+  let stream = null;
+
+  // Splash screen
+  setTimeout(() => {
+    splashScreen.classList.add("fade-out");
+    setTimeout(() => {
+      splashScreen.style.display = "none";
+      mainContent.style.display = "block";
+      playRandomCircleVideo(); // Play random on page load
+    }, 2000);
+  }, 10000);
+// Function to scroll to the main section
+function scrollToMainSection() {
+  const mainSection = document.getElementById("main-section");
+  window.scrollTo({
+    top: mainSection.offsetTop, 
+    behavior: 'smooth'
+  });
+}
+  // Play random circle video
+  function playRandomCircleVideo() {
+    const randomNum = Math.floor(Math.random() * 6) + 1; // 1 to 6
+    const newPath = `/static/circle${randomNum}.mp4`;
+    circleSource.src = newPath;
+    circleVideo.load();
+    circleVideo.play();
+    circleVideo.style.display = "block";
+    video.style.display = "none";
+  }
+
+  // Start webcam
+  startBtn.addEventListener("click", async () => {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      video.srcObject = stream;
+      video.style.display = "block";
+      circleVideo.pause();
+      circleVideo.style.display = "none";
+      captureBtn.style.display = "inline-block";
+      startBtn.style.display = "none";
+    } catch {
+      alert("Webcam access denied.");
+    }
+  });
+
+  // Capture and detect emotion
+  captureBtn.addEventListener("click", async () => {
+    // Stop any music
+    musicPlayer.pause();
+    musicPlayer.currentTime = 0;
+
+    // Stop webcam before capture
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext("2d").drawImage(video, 0, 0);
+    const imgData = canvas.toDataURL("image/png");
+
+    // Turn off webcam
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      stream = null;
+    }
+
+    video.style.display = "none";
+    disp.innerText = "Detecting emotion…";
+
+    fetch("/detect-emotion", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ image: imgData })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) {
+        disp.innerText = data.error;
+        return;
+      }
+
+      disp.innerHTML = `<strong>${data.emotion}</strong><br>${data.message}`;
+
+      // Play music
+      if (data.music) {
+        musicSource.src = data.music;
+        musicPlayer.style.display = "block";
+        musicPlayer.load();
+        musicPlayer.play();
+      }
+
+      // After detection, show random video again
+      setTimeout(() => {
+        playRandomCircleVideo();
+      }, 1000);
+    })
+    .catch(err => {
+      console.error(err);
+      disp.innerText = "Something went wrong.";
+    });
+  });
+
+  // Optional: if music stops, still show random circle video
+  musicPlayer.addEventListener("pause", () => {
+    if (!video.srcObject) {
+      playRandomCircleVideo();
+    }
+  });
+
+  // Hide circle video when webcam is turned on
+  startBtn.addEventListener("click", () => {
+    circleVideo.style.display = "none";
+    circleVideo.pause();
+  });
+});
+
+
+
 </script>
 
 
